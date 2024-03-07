@@ -1,0 +1,42 @@
+Thu Mar 07 2024 02:01:06 GMT+0100 (West Africa Standard Time) Error: MongoServerError: E11000 duplicate key error collection: photoToText.users index: verifyToken_1 dup key: { verifyToken: null }
+    at InsertOneOperation.execute (/home/xela/photoToTextBE/node_modules/mongodb/lib/operations/insert.js:48:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async executeOperationAsync (/home/xela/photoToTextBE/node_modules/mongodb/lib/operations/execute_operation.js:106:16)
+Thu Mar 07 2024 02:09:17 GMT+0100 (West Africa Standard Time) Error: TypeError: res.status(...).json(...).catch is not a function
+    at exports.registerUser (/home/xela/photoToTextBE/controllers/user/userController.js:60:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Thu Mar 07 2024 02:10:48 GMT+0100 (West Africa Standard Time) Error: MongoServerError: E11000 duplicate key error collection: photoToText.users index: verifyToken_1 dup key: { verifyToken: null }
+    at InsertOneOperation.execute (/home/xela/photoToTextBE/node_modules/mongodb/lib/operations/insert.js:48:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async executeOperationAsync (/home/xela/photoToTextBE/node_modules/mongodb/lib/operations/execute_operation.js:106:16)
+Thu Mar 07 2024 02:16:36 GMT+0100 (West Africa Standard Time) Error: MongoServerError: E11000 duplicate key error collection: photoToText.users index: verifyToken_1 dup key: { verifyToken: null }
+    at InsertOneOperation.execute (/home/xela/photoToTextBE/node_modules/mongodb/lib/operations/insert.js:48:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async executeOperationAsync (/home/xela/photoToTextBE/node_modules/mongodb/lib/operations/execute_operation.js:106:16)
+Thu Mar 07 2024 02:18:00 GMT+0100 (West Africa Standard Time) Error: TypeError: res.status(...).json(...).catch is not a function
+    at exports.registerUser (/home/xela/photoToTextBE/controllers/user/userController.js:60:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Thu Mar 07 2024 02:18:24 GMT+0100 (West Africa Standard Time) Error: TypeError: res.status(...).json(...).catch is not a function
+    at exports.registerUser (/home/xela/photoToTextBE/controllers/user/userController.js:60:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Thu Mar 07 2024 02:18:47 GMT+0100 (West Africa Standard Time) Error: TypeError: res.status(...).json(...).catch is not a function
+    at exports.registerUser (/home/xela/photoToTextBE/controllers/user/userController.js:60:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Thu Mar 07 2024 02:56:35 GMT+0100 (West Africa Standard Time) Error: TypeError: res.status(...).json(...).catch is not a function
+    at exports.createSetupIntent (/home/xela/photoToTextBE/controllers/payment/paymentController.js:25:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Thu Mar 07 2024 03:02:02 GMT+0100 (West Africa Standard Time) Error: Error: The payment method type "googlepay" is invalid. Please ensure the provided type is activated in your dashboard (https://dashboard.stripe.com/account/payments/settings) and your account is enabled for any preview features that you are trying to use.
+    at StripeError.generate (/home/xela/photoToTextBE/node_modules/stripe/cjs/Error.js:10:20)
+    at res.toJSON.then.Error_js_1.StripeAPIError.message (/home/xela/photoToTextBE/node_modules/stripe/cjs/RequestSender.js:105:54)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Thu Mar 07 2024 03:09:31 GMT+0100 (West Africa Standard Time) Error: Error: The currency provided (usd) is invalid. Payments with giropay support the following currencies: eur.
+    at StripeError.generate (/home/xela/photoToTextBE/node_modules/stripe/cjs/Error.js:10:20)
+    at res.toJSON.then.Error_js_1.StripeAPIError.message (/home/xela/photoToTextBE/node_modules/stripe/cjs/RequestSender.js:105:54)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Thu Mar 07 2024 03:10:12 GMT+0100 (West Africa Standard Time) Error: Error: Amount must convert to at least 100 cents. €0.10 converts to approximately $0.11.
+    at StripeError.generate (/home/xela/photoToTextBE/node_modules/stripe/cjs/Error.js:10:20)
+    at res.toJSON.then.Error_js_1.StripeAPIError.message (/home/xela/photoToTextBE/node_modules/stripe/cjs/RequestSender.js:105:54)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Thu Mar 07 2024 03:10:51 GMT+0100 (West Africa Standard Time) Error: TypeError: res.status(...).json(...).catch is not a function
+    at exports.handlePaymentIntent (/home/xela/photoToTextBE/controllers/payment/paymentController.js:51:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
