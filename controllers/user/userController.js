@@ -21,15 +21,15 @@ exports.getAllUsers = async (req, res, next) => {
 exports.registerUser = async (req, res, next) => {
   const { username, email, password } = req.body;
   try {
-    if (!username || !email || !password) {
+    if (!username || !email || !password)
       errorHandling(`400|Please provide all fields.|`);
-    } else {
+    else {
       const existingUser = await User.findOne({
         email: email,
       });
-      if (existingUser) {
+      if (existingUser)
         errorHandling(`401|User with email, ${email} already exists.|`);
-      } else {
+      else {
         const salt = await bcrypt.genSalt(Number(process.env.SALT));
         const hashedPassword = await bcrypt.hash(password, salt);
         const newUser = new User({
@@ -47,23 +47,17 @@ exports.registerUser = async (req, res, next) => {
             expiresIn: '7d',
           },
         );
-
         await updateToken(newUser._id, token);
 
         const createdUser = await User.findOne({
           email: email,
         }).populate('-password');
 
-        res
-          .status(200)
-          .json({
-            message: 'Success',
-            token: token,
-            response: createdUser,
-          })
-          .catch((e) => {
-            next(new Error(e.stack));
-          });
+        res.status(200).json({
+          message: 'Success',
+          token: token,
+          response: createdUser,
+        });
       }
     }
   } catch (e) {
