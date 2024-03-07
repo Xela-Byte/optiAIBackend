@@ -51,7 +51,7 @@ exports.registerUser = async (req, res, next) => {
 
         const createdUser = await User.findOne({
           email: email,
-        }).populate('-password');
+        }).select('-password');
 
         res.status(200).json({
           message: 'Success',
