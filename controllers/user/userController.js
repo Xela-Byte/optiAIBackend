@@ -50,12 +50,16 @@ exports.registerUser = async (req, res, next) => {
 
         await updateToken(newUser._id, token);
 
+        const createdUser = await User.findOne({
+          email: email,
+        }).populate('-password');
+
         res
           .status(200)
           .json({
             message: 'Success',
             token: token,
-            response: newUser,
+            response: createdUser,
           })
           .catch((e) => {
             next(new Error(e.stack));
