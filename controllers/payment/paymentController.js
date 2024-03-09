@@ -4,20 +4,25 @@ const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 exports.createSetupIntent = async (req, res, next) => {
   try {
-    const customer = await stripe.customers.create();
+    let customer = await stripe.customers.create();
+
     const ephemeralKey = await stripe.ephemeralKeys.create(
       { customer: customer.id },
       { apiVersion: '2023-10-16' },
     );
-    const setupIntent = await stripe.setupIntents.create({
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: 999,
+      currency: 'usd',
       customer: customer.id,
     });
-    return res.status(200).json({
+
+    res.status(200).json({
       message: 'Success',
       response: {
-        setupIntent: setupIntent.client_secret,
-        ephemeralKey: ephemeralKey.secret,
+        paymentIntent: paymentIntent.client_secret,
         customer: customer.id,
+        ephemeralKey: ephemeralKey.secret,
       },
     });
   } catch (e) {
@@ -25,21 +30,29 @@ exports.createSetupIntent = async (req, res, next) => {
   }
 };
 
-exports.handlePaymentIntent = async (req, res, next) => {
-  const { amount, currency, gateway } = req.body;
+exports.createSubscription = async (req, res, next) => {
+  const customerId = req.body.customer;
+  const priceId = req.body.priceId;
 
   try {
-    if (!amount || !currency || !gateway) {
-      errorHandling(`400|Please provide all fields.|`);
-    }
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount,
-      currency: currency,
-      payment_method_types: [gateway],
+    const subscription = await stripe.subscriptions.create({
+      customer: customerId,
+      items: [
+        {
+          price: priceId,
+        },
+      ],
+      payment_behavior: 'default_incomplete',
+      payment_settings: { save_default_payment_method: 'on_subscription' },
+      expand: ['latest_invoice.payment_intent'],
     });
-    return res.status(200).json({
+
+    res.status(200).json({
       message: 'Success',
-      response: paymentIntent,
+      response: {
+        subscriptionId: subscription.id,
+        clientSecret: subscription.latest_invoice.payment_intent.client_secret,
+      },
     });
   } catch (e) {
     next(new Error(e.stack));

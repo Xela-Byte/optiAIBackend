@@ -1,13 +1,13 @@
 const express = require('express');
 const {
-  handlePaymentIntent,
   createSetupIntent,
+  createSubscription,
 } = require('../controllers/payment/paymentController');
 
 const paymentRouter = express.Router();
 
 paymentRouter.post('/create-setup-intent', createSetupIntent);
-paymentRouter.post('/handle-setup-intent', handlePaymentIntent);
+paymentRouter.post('/create-subscription', createSubscription);
 
 module.exports = paymentRouter;
 
