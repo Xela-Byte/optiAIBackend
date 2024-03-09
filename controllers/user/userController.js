@@ -2,6 +2,7 @@ const { User } = require('../../models/User');
 const { updateToken } = require('../../core/updateToken');
 const jwt = require('jsonwebtoken');
 const { errorHandling } = require('../../middlewares/errorHandling');
+const stripe = require('stripe')(process.env.STRIPE_KEY);
 const bcrypt = require('bcryptjs');
 
 exports.getAllUsers = async (req, res, next) => {
@@ -32,6 +33,7 @@ exports.registerUser = async (req, res, next) => {
       else {
         const salt = await bcrypt.genSalt(Number(process.env.SALT));
         const hashedPassword = await bcrypt.hash(password, salt);
+
         const newUser = new User({
           username: username,
           email: email,
@@ -48,7 +50,22 @@ exports.registerUser = async (req, res, next) => {
             expiresIn: '7d',
           },
         );
+
         await updateToken(newUser._id, token);
+
+        let customer = await stripe.customers.create();
+
+        await User.findOneAndUpdate(
+          {
+            email,
+          },
+          {
+            customer: customer.id,
+          },
+          {
+            new: true,
+          },
+        );
 
         const createdUser = await User.findOne({
           email: email,

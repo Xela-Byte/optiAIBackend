@@ -26,17 +26,6 @@ exports.createSetupIntent = async (req, res, next) => {
         if (existingCustomer === '') {
           let customer = await stripe.customers.create();
 
-          const ephemeralKey = await stripe.ephemeralKeys.create(
-            { customer: customer.id },
-            { apiVersion: '2023-10-16' },
-          );
-
-          const paymentIntent = await stripe.paymentIntents.create({
-            amount: 999,
-            currency: 'usd',
-            customer: customer.id,
-          });
-
           existingUser = await User.findOneAndUpdate(
             {
               email,
@@ -53,9 +42,6 @@ exports.createSetupIntent = async (req, res, next) => {
             message: 'Success',
             response: {
               user: existingUser,
-              paymentIntent: paymentIntent.client_secret,
-              customer: customer.id,
-              ephemeralKey: ephemeralKey.secret,
             },
           });
         }
