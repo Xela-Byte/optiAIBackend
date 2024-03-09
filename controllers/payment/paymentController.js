@@ -15,9 +15,14 @@ exports.createSetupIntent = async (req, res, next) => {
       } else {
         let existingCustomer = existingUser.customer;
 
-        if (existingCustomer !== '')
-          errorHandling(`401|Customer with email, ${email} already exists.|`);
-
+        if (existingCustomer !== '') {
+          res.status(201).json({
+            message: `'Customer' ${email} already exists!`,
+            response: {
+              user: existingUser,
+            },
+          });
+        }
         if (existingCustomer === '') {
           let customer = await stripe.customers.create();
 
@@ -44,7 +49,7 @@ exports.createSetupIntent = async (req, res, next) => {
             },
           );
 
-          res.status(200).json({
+          return res.status(200).json({
             message: 'Success',
             response: {
               user: existingUser,
