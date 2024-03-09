@@ -17,6 +17,16 @@ const userSchema = new Schema(
       required: true,
       minlength: 6,
     },
+    role: {
+      type: String,
+      default: 'user',
+    },
+    customer: {
+      type: String,
+      unique: true,
+      index: true,
+      sparse: true,
+    },
   },
   {
     timestamps: true,

@@ -36,6 +36,7 @@ exports.registerUser = async (req, res, next) => {
           username: username,
           email: email,
           password: hashedPassword,
+          customer: '',
         });
         await newUser.save();
         const token = jwt.sign(

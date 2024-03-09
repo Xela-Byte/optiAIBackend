@@ -1,30 +1,61 @@
 const { errorHandling } = require('../../middlewares/errorHandling');
+const { User } = require('../../models/User');
 
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 exports.createSetupIntent = async (req, res, next) => {
+  const { email } = req.body;
   try {
-    let customer = await stripe.customers.create();
+    if (!email) {
+      errorHandling(`400|Please provide email.|`);
+    } else {
+      let existingUser = await User.findOne({ email: email });
+      if (!existingUser) {
+        errorHandling(`400|User not found.|`);
+      } else {
+        let existingCustomer = existingUser.customer;
 
-    const ephemeralKey = await stripe.ephemeralKeys.create(
-      { customer: customer.id },
-      { apiVersion: '2023-10-16' },
-    );
+        if (existingCustomer !== '')
+          errorHandling(`401|Customer with email, ${email} already exists.|`);
 
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: 9.99,
-      currency: 'usd',
-      customer: customer.id,
-    });
+        if (existingCustomer === '') {
+          let customer = await stripe.customers.create();
 
-    res.status(200).json({
-      message: 'Success',
-      response: {
-        paymentIntent: paymentIntent.client_secret,
-        customer: customer.id,
-        ephemeralKey: ephemeralKey.secret,
-      },
-    });
+          const ephemeralKey = await stripe.ephemeralKeys.create(
+            { customer: customer.id },
+            { apiVersion: '2023-10-16' },
+          );
+
+          const paymentIntent = await stripe.paymentIntents.create({
+            amount: 999,
+            currency: 'usd',
+            customer: customer.id,
+          });
+
+          existingUser = await User.findOneAndUpdate(
+            {
+              email,
+            },
+            {
+              customer: customer.id,
+            },
+            {
+              new: true,
+            },
+          );
+
+          res.status(200).json({
+            message: 'Success',
+            response: {
+              user: existingUser,
+              paymentIntent: paymentIntent.client_secret,
+              customer: customer.id,
+              ephemeralKey: ephemeralKey.secret,
+            },
+          });
+        }
+      }
+    }
   } catch (e) {
     next(new Error(e.stack));
   }
