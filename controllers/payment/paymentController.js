@@ -12,7 +12,7 @@ exports.createSetupIntent = async (req, res, next) => {
     );
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 999,
+      amount: 9.99,
       currency: 'usd',
       customer: customer.id,
     });
