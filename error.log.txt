@@ -75,3 +75,14 @@ Sat Mar 09 2024 17:44:24 GMT+0100 (West Africa Standard Time) Error: TypeError: 
 Sat Mar 09 2024 17:47:59 GMT+0100 (West Africa Standard Time) Error: TypeError: Assignment to constant variable.
     at exports.createSetupIntent (/home/xela/photoToTextBE/controllers/payment/paymentController.js:35:24)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Sun Mar 10 2024 02:25:55 GMT+0100 (West Africa Standard Time) Error: TypeError: stripe.subscriptions.del is not a function
+    at exports.cancelSubscription (/home/xela/photoToTextBE/controllers/payment/paymentController.js:85:62)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Sun Mar 10 2024 02:30:05 GMT+0100 (West Africa Standard Time) Error: Error: No such subscription: 'pi_3OsaeSFv8L01V7z10b5Wn8vy'
+    at StripeError.generate (/home/xela/photoToTextBE/node_modules/stripe/cjs/Error.js:10:20)
+    at res.toJSON.then.Error_js_1.StripeAPIError.message (/home/xela/photoToTextBE/node_modules/stripe/cjs/RequestSender.js:105:54)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Sun Mar 10 2024 02:36:07 GMT+0100 (West Africa Standard Time) Error: Error: No such subscription: 'sub_1OsaeSFv8L01V7z1Lhy0yA0D'
+    at StripeError.generate (/home/xela/photoToTextBE/node_modules/stripe/cjs/Error.js:10:20)
+    at res.toJSON.then.Error_js_1.StripeAPIError.message (/home/xela/photoToTextBE/node_modules/stripe/cjs/RequestSender.js:105:54)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

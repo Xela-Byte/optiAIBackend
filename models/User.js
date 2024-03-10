@@ -27,6 +27,18 @@ const userSchema = new Schema(
       index: true,
       sparse: true,
     },
+    subscription: {
+      active: {
+        type: Boolean,
+        default: false,
+      },
+      subscriptionId: {
+        type: String,
+        unique: true,
+        index: true,
+        sparse: true,
+      },
+    },
   },
   {
     timestamps: true,
