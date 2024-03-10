@@ -32,9 +32,12 @@ io.on('connection', (socket) => {
   });
 });
 
-Prompt.watch().on('change', (change) => {
-  if (change.operationType === 'insert' || change.operationType === 'update') {
-    io.emit('promptChange', change.fullDocument);
+Prompt.watch().on('change', async () => {
+  try {
+    const prompts = await Prompt.find();
+    io.emit('promptsChange', prompts);
+  } catch (error) {
+    console.error('Error fetching prompts:', error);
   }
 });
 
