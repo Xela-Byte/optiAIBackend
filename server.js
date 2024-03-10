@@ -41,7 +41,7 @@ io.on('connection', async (socket) => {
 Prompt.watch().on('change', async () => {
   try {
     const prompts = await Prompt.find();
-    io.emit('promptsChange', prompts);
+    io.emit('prompts', prompts);
   } catch (error) {
     console.error('Error fetching prompts:', error);
   }
