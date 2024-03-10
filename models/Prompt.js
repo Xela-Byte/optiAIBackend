@@ -16,6 +16,10 @@ const promptSchema = new Schema(
       required: true,
       ref: 'User',
     },
+    active: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

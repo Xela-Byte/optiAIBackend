@@ -9,6 +9,7 @@ const { errorProcessing } = require('./middlewares/errorHandling');
 const paymentRouter = require('./routes/paymentRoutes');
 const promptRouter = require('./routes/promptRoutes');
 const { Prompt } = require('./models/Prompt');
+const { User } = require('./models/User');
 
 const app = express();
 
@@ -28,7 +29,9 @@ io.on('connection', async (socket) => {
   console.log('Client connected');
   try {
     const prompts = await Prompt.find();
+    const users = await User.find();
     socket.emit('prompts', prompts);
+    socket.emit('users', users);
   } catch (error) {
     console.error('Error fetching prompts:', error);
   }
@@ -42,6 +45,15 @@ Prompt.watch().on('change', async () => {
   try {
     const prompts = await Prompt.find();
     io.emit('prompts', prompts);
+  } catch (error) {
+    console.error('Error fetching prompts:', error);
+  }
+});
+
+User.watch().on('change', async () => {
+  try {
+    const users = await User.find();
+    io.emit('users', users);
   } catch (error) {
     console.error('Error fetching prompts:', error);
   }

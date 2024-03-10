@@ -53,7 +53,7 @@ exports.addNewPrompt = async (req, res, next) => {
 exports.updatePrompt = async (req, res, next) => {
   try {
     const user = req.user;
-    const { promptValue, errorMessage, promptId } = req.body;
+    const { promptValue, errorMessage, promptId, active } = req.body;
 
     if (!user) errorHandling(`400|User not found.|`);
     if (!promptId) errorHandling(`400|Prompt not found.|`);
@@ -65,6 +65,7 @@ exports.updatePrompt = async (req, res, next) => {
         {
           value: promptValue,
           errorMessage,
+          active,
         },
       );
 
