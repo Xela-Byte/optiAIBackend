@@ -24,8 +24,14 @@ app.use(
   }),
 );
 
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
   console.log('Client connected');
+  try {
+    const prompts = await Prompt.find();
+    socket.emit('prompts', prompts);
+  } catch (error) {
+    console.error('Error fetching prompts:', error);
+  }
 
   socket.on('disconnect', () => {
     console.log('Client disconnected');
