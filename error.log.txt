@@ -86,3 +86,8 @@ Sun Mar 10 2024 02:36:07 GMT+0100 (West Africa Standard Time) Error: Error: No s
     at StripeError.generate (/home/xela/photoToTextBE/node_modules/stripe/cjs/Error.js:10:20)
     at res.toJSON.then.Error_js_1.StripeAPIError.message (/home/xela/photoToTextBE/node_modules/stripe/cjs/RequestSender.js:105:54)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Sun Mar 10 2024 11:45:41 GMT+0100 (West Africa Standard Time) Error: ValidationError: Prompt validation failed: errorMessage: Path `errorMessage` is required.
+    at Document.invalidate (/home/xela/photoToTextBE/node_modules/mongoose/lib/document.js:3197:32)
+    at /home/xela/photoToTextBE/node_modules/mongoose/lib/document.js:2990:17
+    at /home/xela/photoToTextBE/node_modules/mongoose/lib/schemaType.js:1370:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)

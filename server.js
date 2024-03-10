@@ -1,12 +1,19 @@
 const cors = require('cors');
 require('dotenv').config();
 const express = require('express');
+const socketIo = require('socket.io');
 const { connectToDB } = require('./config/database');
 const router = require('./routes/userRoutes');
+const http = require('http');
 const { errorProcessing } = require('./middlewares/errorHandling');
 const paymentRouter = require('./routes/paymentRoutes');
+const promptRouter = require('./routes/promptRoutes');
+const { Prompt } = require('./models/Prompt');
 
 const app = express();
+
+const server = http.createServer(app);
+const io = socketIo(server);
 
 const whitelist = [];
 
@@ -17,9 +24,24 @@ app.use(
   }),
 );
 
+io.on('connection', (socket) => {
+  console.log('Client connected');
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
+});
+
+Prompt.watch().on('change', (change) => {
+  if (change.operationType === 'insert' || change.operationType === 'update') {
+    io.emit('promptChange', change.fullDocument);
+  }
+});
+
 app.use(express.json());
 app.use('/auth', router);
 app.use('/payment', paymentRouter);
+app.use('/prompt', promptRouter);
 
 //Handle invalid endpoint
 app.use((_, __, next) => {
@@ -45,7 +67,7 @@ app.use((error, request, response, next) => {
 const PORT = process.env.PORT || 5000;
 const setUpServer = () => {
   connectToDB('photoToText', () => {
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Connected to port ${PORT} sucessfully`);
     });
   });
