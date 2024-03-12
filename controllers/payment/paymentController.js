@@ -71,7 +71,7 @@ exports.updateSubscription = async (req, res, next) => {
 };
 
 exports.cancelSubscription = async (req, res, next) => {
-  const { subscriptionId } = req.body;
+  const subscriptionId = req.query.subscriptionId;
   try {
     let existingUser = await User.findOne({
       subscription: {
