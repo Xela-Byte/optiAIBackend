@@ -82,9 +82,8 @@ exports.cancelSubscription = async (req, res, next) => {
     if (!existingUser) {
       errorHandling(`400|User not found.|`);
     } else {
-      const deletedSubscription = await stripe.subscriptions.cancel(
-        req.body.subscriptionId,
-      );
+      const deletedSubscription =
+        await stripe.subscriptions.cancel(subscriptionId);
 
       existingUser = await User.findOneAndUpdate(
         {
